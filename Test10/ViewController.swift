@@ -9,11 +9,29 @@ import UIKit
 
 class ViewController: UIViewController {
 
+    @IBOutlet weak var iamgeView: UIImageView!
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
     }
 
 
+}
+
+extension URL {
+    func loadImage(completion: @escaping (_ image: UIImage?) -> ()) {
+        DispatchQueue.global().async {
+            do {
+                let data = try Data(contentsOf: self)
+                    DispatchQueue.main.async {
+                        completion(UIImage(data: data))
+                    }
+            } catch let error {
+                DispatchQueue.main.async {
+                    completion(nil)
+                }
+                print(error.localizedDescription)
+            }
+        }
+    }
 }
 

@@ -1,0 +1,27 @@
+name: CI
+
+    on:
+    push:
+    branches: [main]
+    pull_request:
+    branches: [main]
+
+    jobs:
+    build:
+    runs-on: [self-hosted, macOS]
+    steps:
+    - uses: actions/checkout@v2
+    - name: Update pod repo
+    run: pod repo update
+    - name: test
+    run: echo hello world
+    env:
+    IS_POD_BINARY_CACHE_ENABLED: "true"
+    env:
+    MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
+    MATCH_GIT_BASIC_AUTHORIZATION: ${{ secrets.MATCH_GIT_BASIC_AUTHORIZATION }}
+    IS_POD_BINARY_CACHE_ENABLED: "true"
+    LANG: en_US.UTF-8
+    LANGUAGE: en_US.UTF-8
+    LC_ALL: en_US.UTF-8
+    RUN_ON_CI: true
